@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 		// If we're successfull!
 		request.done(function (response, textStatus, jqXHR){
-			$("#todoList").append('<li>'+itemName_input+'</li>');
+			$("#todoList").append('<li data-id="' + response + '">' + itemName_input + ' <i class="fa fa-times pull-right"></i></li>');
 			$('#product').val("");
 		});
 
@@ -25,5 +25,20 @@ $(document).ready(function() {
 	    request.always(function () {
 	        $('#product, #addproduct').prop("disabled", false);
 	    });
-	});
+  });
+  
+  $('#todoList').on('click', '.fa-times', function() {
+    var itemid = $(this).parent().attr('data-id');
+
+    var request = $.ajax({
+      url: "ajax/removeItemsFromList.php",
+      type: "post",
+      data: { itemid : itemid }
+    });
+
+    // If we're successful
+    request.done(function (response, textStatus, jqXHR) {
+      $('#todoList > li[data-id="' + response + '"]').remove();
+    });
+  });
 });

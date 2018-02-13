@@ -7,7 +7,7 @@
         $listItems = $todoListsObj->getListItems($listid);
 
         foreach($listItems as $key => $value) {
-          echo "<li>" . $value['item_name'] ."</li>";
+          echo '<li data-id="' . $value['item_id'] . '">' . $value['item_name'] . '<i class="fa fa-times pull-right"></i></li>';
         }
       ?>
     </ul>

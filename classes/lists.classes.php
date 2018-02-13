@@ -24,4 +24,13 @@ class todoLists {
     $stmt->execute();
     return $this->db->lastInsertId();
   }
+
+  public function removeItemFromList($itemId) {
+    $query = "DELETE FROM list_items WHERE item_id = :itemid";
+    $pdo = $this->db->prepare($query);
+    $pdo->bindParam(':itemid', $itemId);
+    $pdo->execute();
+
+    return $itemId;
+  }
 }
