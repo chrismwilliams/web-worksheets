@@ -1,0 +1,1 @@
+<?= 'Success! Thank you for registering';
