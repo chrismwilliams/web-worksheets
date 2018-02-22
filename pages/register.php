@@ -7,6 +7,8 @@ if (isset($_POST['email']) || isset($_POST['password'])) {
 
   if (!$error) {
     require_once 'classes/users.classes.php';
+    require_once 'classes/textlocal.classes.php';
+    require_once 'includes/txtlocal.php';
 
     $usersObj = new users($db);
     $createUser = $usersObj->registerUser($_POST['email'], $_POST['password']);
@@ -32,7 +34,11 @@ if (isset($_POST['email']) || isset($_POST['password'])) {
       $headers .= "From: <me@student.worc.ac.uk>" . "\r\n";
 
       mail($to, $subject, $message, $headers);
-
+      $textlocal = new Textlocal($txtlocalEmail, $txtlocalApi);
+      $numbers = array($_POST['mobile']);
+      $sender = 'Todo List';
+      $message = 'Welcome to my todo list!';
+      //$response = $textlocal->sendSms($numbers, $message, $sender);
       echo "<script> window.location.assign('index.php?p=registersuccess'); </script>";
     }
   }
@@ -60,6 +66,10 @@ if (isset($_POST['email']) || isset($_POST['password'])) {
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" name="password" id="password" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="mobile">Mobile Number</label>
+      <input type="text" name="mobile" id="mobile" class="form-control">
     </div>
     <button type="submit" class="btn btn-default">Register</button>
   </form>
